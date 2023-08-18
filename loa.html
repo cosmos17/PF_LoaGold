@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lostark API Example</title>
+</head>
+<body>
+    <h1>Lostark API Example</h1>
+    <button onclick="getGuildRankings()">Get Guild Rankings</button>
+    <div id="result"></div>
+
+    <script>
+        function getGuildRankings() {
+            var serverName = "아만"; // 서버 이름을 여기에 지정하거나, 사용자 입력 폼을 통해 받아올 수도 있습니다.
+            var JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsing1dCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAwNzA5NzkifQ.Iybofm8QwTE4BNpCKvFXvx_anT2PIFikjoh8vfsZ2U-nini1Y6rMuPnsxmXf1K1G7LrNfGwJ54xGtL9N6GebEv8waXsvtatuAeuaNWykuiBoeYlgbiMOFRFcPFSHUmp3R51tBwWgIpP9uMdfa2eDwDycvHkUgZEYlVZhOgMzzBH9A3DRknOMyfFi_V1a2P8_1Avv7HAxYupuRNZZZUYW1WMAvggZ2dOB6hClL25BcUzxX-8wwMgSUR7u16Xi5NYfOpCD1179By9xTKbOLH6GlsKikruBG6ctr_9Q2CagcF9im84UbplCLayEvlHmbQFGzkxr-v9wUj-dPWniBNRcanA"; // 사용자의 JWT를 여기에 입력해야 합니다.
+
+            // API 요청을 보내기 위한 XMLHttpRequest 객체 생성
+            var xhr = new XMLHttpRequest();
+            var url = "https://developer-lostark.game.onstove.com/guilds/rankings?serverName=" + encodeURIComponent(serverName);
+
+            xhr.open("GET", url, true);
+            xhr.setRequestHeader('accept', 'application/json');
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.setRequestHeader('authorization', 'bearer ' + JWT);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var resultDiv = document.getElementById("result");
+                    resultDiv.innerHTML = JSON.stringify(response, null, 2);
+                }
+            };
+
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
